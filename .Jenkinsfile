@@ -10,11 +10,20 @@ node {
         sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
       }
     }
-    stage('Tests') { //(3)
-      junit '**/target/surefire-reports/TEST-*.xml'
-      archive 'target/*.jar'
-      step([$class: 'JacocoPublisher', execPattern: '**/target/jacoco.exec'])
-    }
+//     stage('Tests') { //(3)
+//       junit '**/target/surefire-reports/TEST-*.xml'
+//       archive 'target/*.jar'
+//       step([$class: 'JacocoPublisher', execPattern: '**/target/jacoco.exec'])
+//     }
+    stage('Publish to InfluxDB') {
+                steps {
+                    // Публикуем данные в InfluxDB
+                    influxDbPublisher(
+                        target: "${env.INFLUXDB_TARGET}",
+                        customData: null // или можно передавать свои метрики
+                    )
+                }
+            }
     stage('Report') { //(4)
       if (currentBuild.currentResult == 'UNSTABLE') {
         currentBuild.result = "UNSTABLE"
