@@ -20,32 +20,34 @@ node {
         mvnHome = tool 'maven3'
     }
 
-    
-    stage('Build') { //(2)
-      dir('service-1') {
-        sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
-      }
-    }
-//     stage('Tests') { //(3)
-//       junit '**/target/surefire-reports/TEST-*.xml'
-//       archive 'target/*.jar'
-//       step([$class: 'JacocoPublisher', execPattern: '**/target/jacoco.exec'])
-//     }
-    stage('Publish to InfluxDB') {
-        steps {
-            influxDbPublisher(target: "${env.INFLUXDB_TARGET}")
+        stage('Build') {
+            dir('service-1') {
+                sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
+            }
         }
-    }
-    stage('Report') { //(4)
-        if (currentBuild.currentResult == 'UNSTABLE') {
-            currentBuild.result = "UNSTABLE"
-        } else {
-            currentBuild.result = "SUCCESS"
+
+        stage('Report') {
+            if (currentBuild.currentResult == 'UNSTABLE') {
+                currentBuild.result = "UNSTABLE"
+            } else {
+                currentBuild.result = "SUCCESS"
+            }
+
+            influxDbPublisher(
+                selectedTarget: env.INFLUXDB_TARGET,
+                customData: null,
+                customDataMap: null,
+                customPrefix: null,
+                jenkinsEnvParameterField: null,
+                measurementName: null,
+                replaceDashWithUnderscore: true,
+                showRawBuildParameters: false
+            )
         }
-        influxDbPublisher(target: 'grafana')
+    } catch (Exception e) {
+        currentBuild.result = "FAILURE"
+        influxDbPublisher(
+            selectedTarget: env.INFLUXDB_TARGET
+        )
     }
-  } catch (Exception e) {
-    currentBuild.result = "FAILURE"
-    step([$class: 'InfluxDbPublisher', customData: null, customDataMap: null, customPrefix: null, target: 'grafana'])
-  }
 }
