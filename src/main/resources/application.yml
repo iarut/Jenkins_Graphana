@@ -1,0 +1,34 @@
+#server:
+#  port: 8080
+logging:
+#  config: classpath:logback-spring.xml
+  level:
+    root: error
+    org.springframework: off
+    org.example.controller: debug
+    org.example.repository: debug
+    org.example.service: debug
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,metrics,beans,env,info
+  endpoint:
+    health:
+      show-details: always
+    info:
+      access: unrestricted
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+
+
+
