@@ -24,8 +24,6 @@ node {
 
                 // Выводим содержимое папки target для отладки
                 sh "ls -l target"
-            }
-        }
 
                 // Проверяем, что jar действительно создан
                 if (!fileExists('target/PostmanApplication-0.0.1-SNAPSHOT.jar')) {
