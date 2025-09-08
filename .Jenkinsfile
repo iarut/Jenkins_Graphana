@@ -21,6 +21,7 @@ node {
         stage('Build') {
             dir('.') {
                 sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore=true clean package"
+                sh "ls -l target"
             }
         }
 
