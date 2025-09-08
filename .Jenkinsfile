@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                     // Запускаем jar после сборки
-                    sh 'java -jar target/PostmanApplication-0.0.1-SNAPSHOT.jar &'
+                    sh 'java -jar target/*.jar'
                 }
             }
         }
