@@ -21,6 +21,8 @@ node {
         stage('Build') {
             dir('.') {
                 sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore=true clean package"
+
+                // Выводим содержимое папки target для отладки
                 sh "ls -l target"
             }
         }
