@@ -19,7 +19,7 @@ node {
         }
 
         stage('Build') {
-            dir('service-1') {
+            dir('.') {
                 sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore=true clean package"
             }
         }
