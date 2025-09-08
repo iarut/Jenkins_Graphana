@@ -12,6 +12,7 @@ node {
         steps{
         git branch: 'main',
             url: 'https://github.com/iarut/Jenkins_Graphana.git'
+            credentialsId: "${env.GIT_CREDENTIALS_ID}"
         mvnHome = tool 'maven3'
         credentialsId: "${env.GIT_CREDENTIALS_ID}"
     }
