@@ -9,7 +9,6 @@ node {
   def mvnHome
   try {
     stage('Checkout') { //(1)
-        steps{
         git branch: 'main',
             url: 'https://github.com/iarut/Jenkins_Graphana.git'
             credentialsId: "${env.GIT_CREDENTIALS_ID}"
