@@ -3,25 +3,20 @@ node {
     env.GIT_CREDENTIALS_ID = 'git-credentials'  // ID твоих git credentials
     env.INFLUXDB_TARGET = 'grafana'             // имя target из Jenkins → Configure System → InfluxDB
 
-  environment {
-            // ID credentials, которые ты создал для Git
-            GIT_CREDENTIALS_ID = 'git-credentials'
-            // Название InfluxDB target из настроек Jenkins
-            INFLUXDB_TARGET = 'grafana'
+    def mvnHome
+
+    try {
+        stage('Checkout') {
+            checkout([
+                $class: 'GitSCM',
+                branches: [[name: '*/main']],
+                userRemoteConfigs: [[
+                    url: 'https://github.com/iarut/Jenkins_Graphana.git',
+                    credentialsId: env.GIT_CREDENTIALS_ID
+                ]]
+            ])
+            mvnHome = tool 'maven3'
         }
-  def mvnHome
-  try {
-    stage('Checkout') { //(1)
-        checkout([
-            $class: 'GitSCM',
-            branches: [[name: '*/main']],
-            userRemoteConfigs: [[
-                url: 'https://github.com/iarut/Jenkins_Graphana.git',
-                credentialsId: "${env.GIT_CREDENTIALS_ID}"
-            ]]
-        ])
-        mvnHome = tool 'maven3'
-    }
 
         stage('Build') {
             dir('service-1') {
