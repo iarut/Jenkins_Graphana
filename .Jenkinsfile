@@ -35,6 +35,13 @@ pipeline {
             }
         }
 
+        stage('Check') {
+                    steps {
+                        // Проверка доступности контроллера
+                        sh 'curl -I http://localhost:8080/api/v1/products'
+                    }
+                }
+
         stage('Report') {
             steps {
                 script {
