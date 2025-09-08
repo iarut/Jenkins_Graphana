@@ -24,6 +24,16 @@ node {
             }
         }
 
+        stage('Verify Jar') {
+                    dir('.') {
+                        if (!fileExists('target/PostmanApplication-0.0.1-SNAPSHOT.jar')) {
+                            error "Jar file not found! Build failed."
+                        } else {
+                            echo "Jar file exists, ready to run."
+                        }
+                    }
+                }
+
         stage('Run') {
             sh "java -jar target/*.jar"
         }
