@@ -37,12 +37,12 @@ node {
         }
     }
     stage('Report') { //(4)
-      if (currentBuild.currentResult == 'UNSTABLE') {
-        currentBuild.result = "UNSTABLE"
-      } else {
-        currentBuild.result = "SUCCESS"
-      }
-      step([$class: 'InfluxDbPublisher', customData: null, customDataMap: null, customPrefix: null, target: 'grafana'])
+        if (currentBuild.currentResult == 'UNSTABLE') {
+            currentBuild.result = "UNSTABLE"
+        } else {
+            currentBuild.result = "SUCCESS"
+        }
+        influxDbPublisher(target: 'grafana')
     }
   } catch (Exception e) {
     currentBuild.result = "FAILURE"
