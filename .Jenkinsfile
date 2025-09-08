@@ -1,4 +1,7 @@
 node {
+    // Определяем переменные окружения
+    env.GIT_CREDENTIALS_ID = 'git-credentials'  // ID твоих git credentials
+    env.INFLUXDB_TARGET = 'grafana'             // имя target из Jenkins → Configure System → InfluxDB
 
   environment {
             // ID credentials, которые ты создал для Git
