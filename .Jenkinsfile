@@ -19,7 +19,7 @@ node {
         }
 
         stage('Build') {
-            dir('.') {
+            dir('.') { // убедись, что это корень проекта с pom.xml
                 sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore=true clean package"
 
                 // Выводим содержимое папки target для отладки
