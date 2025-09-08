@@ -32,14 +32,10 @@ node {
 //       step([$class: 'JacocoPublisher', execPattern: '**/target/jacoco.exec'])
 //     }
     stage('Publish to InfluxDB') {
-                steps {
-                    // Публикуем данные в InfluxDB
-                    influxDbPublisher(
-                        target: "${env.INFLUXDB_TARGET}",
-                        customData: null // или можно передавать свои метрики
-                    )
-                }
-            }
+        steps {
+            influxDbPublisher(target: "${env.INFLUXDB_TARGET}")
+        }
+    }
     stage('Report') { //(4)
       if (currentBuild.currentResult == 'UNSTABLE') {
         currentBuild.result = "UNSTABLE"
