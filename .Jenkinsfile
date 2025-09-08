@@ -10,7 +10,7 @@ node {
   try {
     stage('Checkout') { //(1)
         steps{
-        git branch 'main',
+        git branch: 'main',
             url: 'https://github.com/iarut/Jenkins_Graphana.git'
         mvnHome = tool 'maven3'
         credentialsId: "${env.GIT_CREDENTIALS_ID}"
