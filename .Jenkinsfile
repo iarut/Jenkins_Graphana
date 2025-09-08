@@ -1,4 +1,11 @@
 node {
+
+  environment {
+            // ID credentials, которые ты создал для Git
+            GIT_CREDENTIALS_ID = 'git-credentials'
+            // Название InfluxDB target из настроек Jenkins
+            INFLUXDB_TARGET = 'grafana'
+        }
   def mvnHome
   try {
     stage('Checkout') { //(1)
