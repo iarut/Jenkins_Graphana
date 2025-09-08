@@ -9,9 +9,14 @@ node {
   def mvnHome
   try {
     stage('Checkout') { //(1)
-        git branch: 'main',
-            url: 'https://github.com/iarut/Jenkins_Graphana.git'
-            credentialsId: "${env.GIT_CREDENTIALS_ID}"
+        checkout([
+            $class: 'GitSCM',
+            branches: [[name: '*/main']],
+            userRemoteConfigs: [[
+                url: 'https://github.com/iarut/Jenkins_Graphana.git',
+                credentialsId: "${env.GIT_CREDENTIALS_ID}"
+            ]]
+        ])
         mvnHome = tool 'maven3'
     }
 
