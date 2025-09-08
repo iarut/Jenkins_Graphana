@@ -3,7 +3,6 @@ node {
     env.GIT_CREDENTIALS_ID = 'git-credentials'  // ID твоих git credentials
     env.INFLUXDB_TARGET = 'influxdb'             // имя target из Jenkins → Configure System → InfluxDB
 
-    def mvnHome
 
     try {
         stage('Checkout') {
@@ -15,12 +14,12 @@ node {
                     credentialsId: env.GIT_CREDENTIALS_ID
                 ]]
             ])
-            mvnHome = tool 'maven3'
+
         }
 
         stage('Build') {
             dir('.') { // убедись, что это корень проекта с pom.xml
-                sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore=true clean package"
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
 
                 // Выводим содержимое папки target для отладки
                 sh "ls -l target"
