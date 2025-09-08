@@ -9,8 +9,13 @@ node {
   def mvnHome
   try {
     stage('Checkout') { //(1)
-      git 'https://github.com/iarut/Jenkins_Graphana.git'
-      mvnHome = tool 'maven3'
+        steps{
+        git branch 'main',
+            url: 'https://github.com/iarut/Jenkins_Graphana.git'
+        mvnHome = tool 'maven3'
+        credentialsId: "${env.GIT_CREDENTIALS_ID}"
+    }
+
     }
     stage('Build') { //(2)
       dir('service-1') {
