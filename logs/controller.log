@@ -14,3 +14,6 @@
 2025-09-08 10:27:57 DEBUG [http-nio-8080-exec-3] o.e.controller.ProductController - Returning list of products [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
 2025-09-08 10:28:12 DEBUG [http-nio-8080-exec-5] o.e.controller.ProductController - Returning list of products [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
 2025-09-08 10:28:28 DEBUG [http-nio-8080-exec-7] o.e.controller.ProductController - Returning product by id 1
+2025-09-08 11:59:04 DEBUG [http-nio-8080-exec-2] o.e.controller.ProductController - Returning product by id 1
+2025-09-08 11:59:04 DEBUG [http-nio-8080-exec-4] o.e.controller.ProductController - Returning product by id 1
+2025-09-08 11:59:25 DEBUG [http-nio-8080-exec-7] o.e.controller.ProductController - Returning list of products []

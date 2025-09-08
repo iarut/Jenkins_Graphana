@@ -15,3 +15,9 @@
 2025-09-08 10:28:12 DEBUG [http-nio-8080-exec-5] o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
 2025-09-08 10:28:12 DEBUG [http-nio-8080-exec-5] o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
 2025-09-08 10:28:28 INFO  [http-nio-8080-exec-7] o.e.repository.ProductRepository - No item found by id
+2025-09-08 11:59:04 INFO  [http-nio-8080-exec-2] o.e.repository.ProductRepository - No item found by id
+2025-09-08 11:59:04 INFO  [http-nio-8080-exec-4] o.e.repository.ProductRepository - No item found by id
+2025-09-08 11:59:25 DEBUG [http-nio-8080-exec-7] o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-08 11:59:25 DEBUG [http-nio-8080-exec-7] o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-08 11:59:25 DEBUG [http-nio-8080-exec-7] o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-08 11:59:25 DEBUG [http-nio-8080-exec-7] o.e.repository.ProductRepository - Repository returning list of products product []

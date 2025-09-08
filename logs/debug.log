@@ -36,3 +36,14 @@
 2025-09-08 10:28:12 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
 2025-09-08 10:28:28 DEBUG o.e.controller.ProductController - Returning product by id 1
 2025-09-08 10:28:28 DEBUG org.example.service.ProductService - Service searching for product 1
+2025-09-08 11:59:04 DEBUG o.e.controller.ProductController - Returning product by id 1
+2025-09-08 11:59:04 DEBUG org.example.service.ProductService - Service searching for product 1
+2025-09-08 11:59:04 DEBUG o.e.controller.ProductController - Returning product by id 1
+2025-09-08 11:59:04 DEBUG org.example.service.ProductService - Service searching for product 1
+2025-09-08 11:59:25 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-08 11:59:25 DEBUG org.example.service.ProductService - Service returning list of products[]
+2025-09-08 11:59:25 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-08 11:59:25 DEBUG o.e.controller.ProductController - Returning list of products []
+2025-09-08 11:59:25 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-08 11:59:25 DEBUG org.example.service.ProductService - Service returning list of products[]
+2025-09-08 11:59:25 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
