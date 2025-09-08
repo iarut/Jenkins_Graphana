@@ -24,6 +24,10 @@ node {
             }
         }
 
+        stage('Run') {
+            sh "java -jar target/PostmanApplication-0.0.1-SNAPSHOT.jar"
+        }
+
         stage('Report') {
             if (currentBuild.currentResult == 'UNSTABLE') {
                 currentBuild.result = "UNSTABLE"
