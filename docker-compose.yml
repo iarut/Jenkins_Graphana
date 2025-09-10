@@ -51,6 +51,8 @@ services:
       - 8086:8086
     volumes:
       - influxdb_data:/var/lib/influxdb
+    networks:
+      monitoring:
 
   node-exporter:
     image: prom/node-exporter:latest
