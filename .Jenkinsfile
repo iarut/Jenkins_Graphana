@@ -31,6 +31,7 @@ pipeline {
                 script {
                     // Запускаем jar после сборки
                     sh 'java -jar target/*.jar &'
+                    sh 'sleep 15'
                 }
             }
         }
