@@ -28,6 +28,9 @@ services:
       - prometheus_data:/prometheus
     ports:
       - 9090:9090
+    networks:
+      monitoring:
+
 
   grafana:
     image: grafana/grafana-oss:latest
