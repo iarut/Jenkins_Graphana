@@ -4,12 +4,6 @@ RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive \
     apt-get install --no-install-recommends --assume-yes \
       docker.io \
-# Установим зависимости
-RUN apt-get update && apt-get install -y \
-    curl \
-    unzip \
-    python3 \
-    python3-pip
 
 RUN apt-get update && apt-get install -y docker-compose
 
