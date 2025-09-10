@@ -83,7 +83,7 @@ pipeline {
 
         stage('Run App') {
                     steps {
-                        sh '/usr/local/bin/docker-compose up -d app'
+                        sh 'docker build -t myapp -f Dockerfile_app .'
                     }
         }
 
