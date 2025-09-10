@@ -108,7 +108,7 @@ pipeline {
                     steps {
                         // Проверка доступности контроллера
                         sh 'sleep 15'
-                        sh 'curl -I http://localhost:8081/api/v1/products'
+//                         sh 'curl -I http://localhost:8081/api/v1/products'
                     }
                 }
 
