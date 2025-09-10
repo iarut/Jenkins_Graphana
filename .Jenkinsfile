@@ -26,6 +26,24 @@ pipeline {
             }
         }
 
+        stage('Install Docker Compose') {
+            steps {
+                script {
+                    // Скачиваем бинарник
+                    sh '''
+                    curl -L "https://github.com/docker/compose/releases/download/v2.39.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                    chmod +x /usr/local/bin/docker-compose
+                    '''
+
+                    // Добавляем путь в PATH на случай, если Jenkins не видит бинарник
+                    env.PATH = "/usr/local/bin:${env.PATH}"
+
+                    // Проверяем установку
+                    sh 'docker-compose --version'
+                }
+            }
+        }
+
         stage('Check Jenkins Permissions') {
             steps {
                 script {
