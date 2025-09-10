@@ -86,9 +86,7 @@ services:
 
 
 networks:
-    jenkins_net:
-    default:
-      name: prometheus-grafana
+    monitoring:
       driver: bridge
 
 
