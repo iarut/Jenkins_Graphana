@@ -26,6 +26,43 @@ pipeline {
             }
         }
 
+        stage('Check Jenkins Permissions') {
+            steps {
+                script {
+                    echo "=== Проверка пользователя ==="
+                    def user = sh(script: 'whoami', returnStdout: true).trim()
+                    echo "Jenkins выполняется от пользователя: ${user}"
+
+                    echo "=== Проверка групп пользователя ==="
+                    def groupsList = sh(script: 'groups', returnStdout: true).trim()
+                    echo "Группы пользователя: ${groupsList}"
+
+                    // Проверка доступности Docker
+                    try {
+                        sh 'docker --version'
+                    } catch (Exception e) {
+                        echo "Docker недоступен! Установите Docker или добавьте пользователя Jenkins в группу docker."
+                    }
+
+                    // Проверка доступности docker-compose
+                    try {
+                        sh '/usr/local/bin/docker-compose --version'
+                    } catch (Exception e) {
+                        echo "docker-compose недоступен! Убедитесь, что путь /usr/local/bin/docker-compose добавлен в PATH."
+                    }
+
+                    // Проверка прав на выполнение Docker команд
+                    def dockerPsSuccess = sh(script: 'docker ps', returnStatus: true)
+                    if (dockerPsSuccess != 0) {
+                        echo "У пользователя Jenkins нет прав на выполнение Docker команд."
+                        echo "Решение: добавить пользователя Jenkins в группу docker и перезапустить Jenkins контейнер."
+                    } else {
+                        echo "Права на выполнение Docker команд проверены успешно."
+                    }
+                }
+            }
+        }
+
         stage('Run App') {
                     steps {
                         sh '/usr/local/bin/docker-compose up -d app'
