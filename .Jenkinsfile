@@ -81,7 +81,7 @@ pipeline {
             }
         }
 
-        stage('Run App') {
+        stage('Build 1') {
                     steps {
                         sh 'docker build -t myapp -f Dockerfile_app .'
                     }
