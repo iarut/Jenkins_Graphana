@@ -85,3 +85,4 @@ volumes:
   prometheus_data:
   grafana_data:
   influxdb_data:
+  jenkins_home:
