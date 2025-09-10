@@ -80,7 +80,7 @@ services:
     ports:
       - "8081:8081"
     networks:
-      - jenkins_net
+      - monitoring
     depends_on:
       - jenkins
 
