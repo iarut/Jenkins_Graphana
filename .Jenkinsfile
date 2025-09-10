@@ -15,16 +15,16 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                // Используем Maven внутри Docker с OpenJDK 17
-                script {
-                    docker.image('maven:3.8.5-openjdk-17').inside {
-                        sh 'mvn -Dmaven.test.failure.ignore=true clean package'
-                    }
-                }
-            }
-        }
+//         stage('Build') {
+//             steps {
+//                 // Используем Maven внутри Docker с OpenJDK 17
+//                 script {
+//                     docker.image('maven:3.8.5-openjdk-17').inside {
+//                         sh 'mvn -Dmaven.test.failure.ignore=true clean package'
+//                     }
+//                 }
+//             }
+//         }
 
 //         stage('Install Docker Compose') {
 //             steps {
