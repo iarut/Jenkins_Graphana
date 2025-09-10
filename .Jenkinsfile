@@ -26,15 +26,21 @@ pipeline {
             }
         }
 
-        stage('Run') {
-            steps {
-                script {
-                    // Запускаем jar после сборки
-                    sh 'java -jar target/*.jar &'
-                    sh 'sleep 15'
-                }
-            }
+        stage('Run App') {
+                    steps {
+                        sh 'docker-compose up -d app'
+                    }
         }
+
+//         stage('Run') {
+//             steps {
+//                 script {
+//                     // Запускаем jar после сборки
+//                     sh 'java -jar target/*.jar &'
+//                     sh 'sleep 15'
+//                 }
+//             }
+//         }
 
         stage('Check') {
                     steps {
