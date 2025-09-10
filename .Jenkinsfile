@@ -38,7 +38,7 @@ pipeline {
         stage('Check') {
                     steps {
                         // Проверка доступности контроллера
-                        sh 'curl -I http://localhost:8080/api/v1/products'
+                        sh 'curl -I http://localhost:8081/api/v1/products'
                     }
                 }
 
