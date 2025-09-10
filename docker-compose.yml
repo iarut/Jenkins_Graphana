@@ -51,6 +51,13 @@ services:
       - 8086:8086
     volumes:
       - influxdb_data:/var/lib/influxdb
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: myuser
+      DOCKER_INFLUXDB_INIT_PASSWORD: mypassword
+      DOCKER_INFLUXDB_INIT_ORG: myorg
+      DOCKER_INFLUXDB_INIT_BUCKET: mybucket
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: mytoken
     networks:
       monitoring:
 
