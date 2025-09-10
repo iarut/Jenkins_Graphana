@@ -5,6 +5,8 @@ RUN apt-get update \
     apt-get install --no-install-recommends --assume-yes \
       docker.io \
 
+ENV PATH="/usr/local/bin:${PATH}"
+
 RUN apt-get update && apt-get install -y docker-compose
 
 RUN apt-get update && apt-get install -y \
