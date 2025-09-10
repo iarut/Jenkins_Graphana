@@ -89,7 +89,7 @@ pipeline {
 
         stage('Run'){
                     steps {
-                        sh 'docker run -p 8081:8080 myapp'
+                        sh 'docker run -p 8081:8081 myapp'
                         sh 'sleep 15'
                     }
         }
