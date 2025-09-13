@@ -70,7 +70,7 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         logger.debug("Adding product {}", product);
-        AtomicReference<Product> productResponse = new AtomicReference<>();;
+//        AtomicReference<Product> productResponse = new AtomicReference<>();;
         activeRequests.incrementAndGet();
         requestCounter.increment();
         processingQueue.add(product);
