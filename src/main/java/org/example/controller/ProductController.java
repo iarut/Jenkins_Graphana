@@ -82,7 +82,7 @@ public class ProductController {
                 logger.debug("Saved product {}", product);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                productResponse.set(null);
+                service.saveProduct(null);
                 logger.error("Error while saving product {}", product, e);
             }
             logger.debug("Saved product {}", product);
