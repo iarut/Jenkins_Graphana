@@ -3,6 +3,7 @@ package org.example.repository;
 import org.example.model.Product;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +25,11 @@ public class ProductRepository {
 
     public void createProducts() {
         logger.debug("Repository working on adding products product {}");
-        list = List.of(
+        list = new ArrayList<>(List.of(
                 new Product(1, "product 1", 10, 1000),
                 new Product(2, "product 2", 20, 2000),
                 new Product(3, "product 3", 30, 3000)
-        );
+        ));
     }
 
     public List<Product> getAllProducts() {
