@@ -78,7 +78,7 @@ public class ProductController {
             // Симуляция обработки
             try {
                 Thread.sleep(100); // Задержка для имитации времени обработки
-                productResponse.set(service.saveProduct(product));
+                service.saveProduct(product);
                 logger.debug("Saved product {}", product);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
