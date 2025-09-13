@@ -4,12 +4,14 @@ import org.example.model.Product;
 import org.example.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.micrometer.core.instrument.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -66,7 +68,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product addProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         logger.debug("Adding product {}", product);
         AtomicReference<Product> productResponse = new AtomicReference<>();;
         activeRequests.incrementAndGet();
@@ -88,11 +90,12 @@ public class ProductController {
         });
         responseSizeSummary.record(result.getBytes(StandardCharsets.UTF_8).length);
         activeRequests.decrementAndGet();
-        return productResponse.get();
+        Product returnProduct = productResponse.get();
+        return ResponseEntity.status(HttpStatus.CREATED).body(returnProduct);
     }
 
     @GetMapping
-    public List<Product> findAllProducts() {
+    public ResponseEntity<List<Product>> findAllProducts() {
         activeRequests.incrementAndGet();
         requestCounter.increment();
 
@@ -109,11 +112,11 @@ public class ProductController {
         responseSizeSummary.record(result.getBytes(StandardCharsets.UTF_8).length);
         activeRequests.decrementAndGet();
         logger.debug("Returning list of products {}", service.getProducts());
-        return service.getProducts();
+        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProducts());
     }
 
     @GetMapping("{id}")
-    public Product findProductById(@PathVariable int id) {
+    public ResponseEntity<Product> findProductById(@PathVariable int id) {
         activeRequests.incrementAndGet();
         requestCounter.increment();
 
@@ -130,11 +133,11 @@ public class ProductController {
         });
         responseSizeSummary.record(result.getBytes(StandardCharsets.UTF_8).length);
         activeRequests.decrementAndGet();
-        return service.getProductById(id);
+        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductById(id));
     }
 
     @PutMapping
-    public Product updateProduct(@RequestBody Product product) {
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
         AtomicReference<Product> productResponse = new AtomicReference<>();;
         activeRequests.incrementAndGet();
         requestCounter.increment();
@@ -154,11 +157,11 @@ public class ProductController {
         });
         responseSizeSummary.record(result.getBytes(StandardCharsets.UTF_8).length);
         activeRequests.decrementAndGet();
-        return service.updateProduct(product);
+        return ResponseEntity.status(HttpStatus.FOUND).body(service.updateProduct(product));
     }
 
     @DeleteMapping("{id}")
-    public String deleteProduct(@PathVariable int id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable int id) {
         AtomicReference<Product> productResponse = new AtomicReference<>();;
         activeRequests.incrementAndGet();
         requestCounter.increment();
@@ -178,7 +181,7 @@ public class ProductController {
         });
         responseSizeSummary.record(result.getBytes(StandardCharsets.UTF_8).length);
         activeRequests.decrementAndGet();
-        return service.deleteProduct(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @GetMapping("/queue/stats")
@@ -192,6 +195,31 @@ public class ProductController {
 
         return ResponseEntity.ok(stats);
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/byname", produces = "application/json")
+    public ResponseEntity<Map<String, List<Product>>> getProductsByName() {
+        logger.debug("Getting products by name");
+        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductsByName());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/byprice", produces = "application/json")
+    public ResponseEntity<Map<String, List<Product>>> getProductsByPrice() {
+        logger.debug("Getting products by price");
+        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductByPrice());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/byquantity", produces = "application/json")
+    public ResponseEntity<Map<String, List<Product>>> getProductsByQuantity() {
+        logger.debug("Getting products by quantity");
+        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductsByQuantity());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/byid", produces = "application/json")
+    public ResponseEntity<Map<Integer, List<Product>>> getProductsById() {
+        logger.debug("Getting products by id");
+        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductsById());
+    }
+
 
     // Вспомогательный класс для статистики
     static class QueueStats {

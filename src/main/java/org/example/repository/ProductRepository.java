@@ -1,22 +1,26 @@
 package org.example.repository;
 
 import org.example.model.Product;
-import org.example.service.ProductService;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
 @Repository
 public class ProductRepository {
     private List<Product> list = new ArrayList<Product>();
 
     private static final Logger logger = LoggerFactory.getLogger(ProductRepository.class);
+
+    public ProductRepository() {
+        createProducts();
+    }
+
+
 
     public void createProducts() {
         logger.debug("Repository working on adding products product {}");
@@ -85,5 +89,22 @@ public class ProductRepository {
         list.set(idx, product);
         logger.debug("Repository added new product", product1);
         return product1;
+    }
+
+    public Map<String, List<Product>> getProductsByName() {
+        return list.stream().collect(Collectors.groupingBy(Product::getName));
+
+    }
+
+    public Map<String, List<Product>> getProductsByPrice() {
+        return list.stream().collect(Collectors.groupingBy(p -> String.valueOf(p.getPrice())));
+    }
+
+    public Map<String, List<Product>> getProductsByQuantity() {
+        return list.stream().collect(Collectors.groupingBy(p -> String.valueOf(p.getQuantity())));
+    }
+
+    public Map<Integer, List<Product>> getProductsById() {
+        return list.stream().collect(Collectors.groupingBy(Product::getId));
     }
 }

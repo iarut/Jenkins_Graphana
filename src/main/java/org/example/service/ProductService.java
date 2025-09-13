@@ -1,6 +1,5 @@
 package org.example.service;
 
-import org.example.controller.ProductController;
 import org.example.model.Product;
 import org.example.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductService {
@@ -43,5 +42,25 @@ public class ProductService {
     public Product updateProduct(Product product) {
         logger.debug("Service updating {}", product);
         return repository.update(product);
+    }
+
+    public Map<String, List<Product>> getProductsByName() {
+        logger.debug("Service getting products by name");
+        return repository.getProductsByName();
+    }
+
+    public Map<String, List<Product>> getProductByPrice() {
+        logger.debug("Service getting products by price ");
+        return repository.getProductsByPrice();
+    }
+
+    public Map<String, List<Product>> getProductsByQuantity() {
+        logger.debug("Service getting products by quantity ");
+        return repository.getProductsByQuantity();
+    }
+
+    public Map<Integer, List<Product>> getProductsById() {
+        logger.debug("Service getting products by id ");
+        return repository.getProductsById();
     }
 }
