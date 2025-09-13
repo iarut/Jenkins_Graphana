@@ -96,12 +96,12 @@ public class ProductRepository {
 
     }
 
-    public Map<String, List<Product>> getProductsByPrice() {
-        return list.stream().collect(Collectors.groupingBy(p -> String.valueOf(p.getPrice())));
+    public Map<Double, List<Product>> getProductsByPrice() {
+        return list.stream().collect(Collectors.groupingBy(Product::getPrice));
     }
 
-    public Map<String, List<Product>> getProductsByQuantity() {
-        return list.stream().collect(Collectors.groupingBy(p -> String.valueOf(p.getQuantity())));
+    public Map<Integer, List<Product>> getProductsByQuantity() {
+        return list.stream().collect(Collectors.groupingBy(Product::getQuantity));
     }
 
     public Map<Integer, List<Product>> getProductsById() {

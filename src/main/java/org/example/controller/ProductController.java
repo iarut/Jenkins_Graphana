@@ -203,13 +203,13 @@ public class ProductController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/byprice", produces = "application/json")
-    public ResponseEntity<Map<String, List<Product>>> getProductsByPrice() {
+    public ResponseEntity<Map<Double, List<Product>>> getProductsByPrice() {
         logger.debug("Getting products by price");
         return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductByPrice());
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/byquantity", produces = "application/json")
-    public ResponseEntity<Map<String, List<Product>>> getProductsByQuantity() {
+    public ResponseEntity<Map<Integer, List<Product>>> getProductsByQuantity() {
         logger.debug("Getting products by quantity");
         return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductsByQuantity());
     }

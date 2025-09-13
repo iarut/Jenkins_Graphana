@@ -49,12 +49,12 @@ public class ProductService {
         return repository.getProductsByName();
     }
 
-    public Map<String, List<Product>> getProductByPrice() {
+    public Map<Double, List<Product>> getProductByPrice() {
         logger.debug("Service getting products by price ");
         return repository.getProductsByPrice();
     }
 
-    public Map<String, List<Product>> getProductsByQuantity() {
+    public Map<Integer, List<Product>> getProductsByQuantity() {
         logger.debug("Service getting products by quantity ");
         return repository.getProductsByQuantity();
     }
