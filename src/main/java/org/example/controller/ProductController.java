@@ -90,8 +90,8 @@ public class ProductController {
         });
         responseSizeSummary.record(result.getBytes(StandardCharsets.UTF_8).length);
         activeRequests.decrementAndGet();
-        Product returnProduct = productResponse.get();
-        return ResponseEntity.status(HttpStatus.CREATED).body(returnProduct);
+//        Product returnProduct = productResponse.get();
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveProduct(product));
     }
 
     @GetMapping
