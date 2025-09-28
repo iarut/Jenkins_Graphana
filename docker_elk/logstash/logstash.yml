@@ -5,3 +5,7 @@ xpack.monitoring.elasticsearch.hosts: [ "http://elasticsearch:9200" ]
 xpack.monitoring.enabled: true
 xpack.monitoring.elasticsearch.username: elastic
 xpack.monitoring.elasticsearch.password: elastic
+
+pipeline.workers: 2       # либо количество CPU
+pipeline.batch.size: 50    # меньше, чем 125
+pipeline.batch.delay: 50

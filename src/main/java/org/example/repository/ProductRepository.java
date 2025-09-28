@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.exception.ProductException;
 import org.example.model.Product;
 import org.springframework.stereotype.Repository;
 
@@ -7,6 +8,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,39 +19,42 @@ public class ProductRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductRepository.class);
 
-    public ProductRepository() {
-        createProducts();
-    }
+    public ProductRepository() {createProducts();}
 
 
 
     public void createProducts() {
-        logger.debug("Repository working on adding products product {}");
+        logger.debug("Repository working on adding products");
         list = new ArrayList<>(List.of(
-                new Product(1, "product 1", 10, 1000),
-                new Product(2, "product 2", 20, 2000),
-                new Product(3, "product 3", 30, 3000)
+                new Product(1, "aproduct 1", 10, 1000),
+                new Product(2, "bproduct 2", 20, 2000),
+                new Product(3, "cproduct 3", 30, 3000)
         ));
     }
 
-    public List<Product> getAllProducts() {
+    public Optional<List<Product>> getAllProducts() {
         logger.debug("Repository returning list of products product {}", list);
-        return list;
+        if (list.isEmpty()) {
+            return Optional.empty();
+        }
+        else {
+            return Optional.of(list);
+        }
     }
 
-    public Product findById(int id){
+    public Optional<Product> findById(int id){
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId() == (id)) {
-                logger.debug("Repository searching for item by id", id);
-                return list.get(i);
+                logger.debug("Repository searching for item by id {}", id);
+                return Optional.ofNullable(list.get(i));
             }
         }
-        logger.info("No item found by id", id);
-        return null;
+        logger.info("No item found by id {}", id);
+        return Optional.empty();
     }
 
     public List<Product> search(String name) {
-        logger.debug("Repository searching for item by name", name);
+        logger.debug("Repository searching for item by name {}", name);
         return list.stream().filter(x -> x.getName().startsWith(name)).collect(Collectors.toList());
     }
 
@@ -60,14 +65,20 @@ public class ProductRepository {
         product.setQuantity(p.getQuantity());
         product.setPrice(p.getPrice());
         list.add(product);
-        logger.debug("Repository adding new product", product);
+        logger.debug("Repository adding new product {}", product);
         return product;
     }
 
     public String delete(Integer id) {
-        list.removeIf(x -> x.getId() == (id));
-        logger.debug("Repository deleting product by id", id);
-        return null;
+        logger.debug("Repository deleting product by id {}", id);
+        if (list.removeIf(x -> x.getId() == (id))){
+            logger.info("Repository successfully deleted product by id {}", id);
+            return "Product with id " + id + " deleted";
+        }
+        else{
+            logger.info("Product with id {} not found", id);
+            return "Product with id " + id + " not found";
+        }
     }
 
     public Product update(Product product) {
@@ -77,7 +88,7 @@ public class ProductRepository {
             if (list.get(i).getId() == (product.getId())) {
                 id = product.getId();
                 idx = i;
-                logger.info("Repository successfully updated product ", product);
+                logger.info("Repository successfully updated product {}", product);
                 break;
             }
         }
@@ -88,13 +99,12 @@ public class ProductRepository {
         product1.setQuantity(product.getQuantity());
         product1.setPrice(product.getPrice());
         list.set(idx, product);
-        logger.debug("Repository added new product", product1);
+        logger.debug("Repository added new product {}", product1);
         return product1;
     }
 
     public Map<String, List<Product>> getProductsByName() {
         return list.stream().collect(Collectors.groupingBy(Product::getName));
-
     }
 
     public Map<Double, List<Product>> getProductsByPrice() {

@@ -1,17 +1,30 @@
 package org.example.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import lombok.Getter;
+import lombok.Setter;
+import org.example.exception.InvalidIDException;
+import org.example.exception.ProductException;
 import org.example.model.Product;
 import org.example.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import io.micrometer.core.instrument.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,7 +32,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Validated
 @RestController
 @RequestMapping("/api/v1/products")
 public class ProductController {
@@ -68,9 +83,17 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+    @Tag(name = "изменение/добавление/удаление")
+    @Operation(summary = "Добавить новый продукт", description = "В ответе возвращается объект Product c полями id, name, quantity и price.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Продукт успешно создан"),
+        @ApiResponse(responseCode = "400", description = "Некорректные данные продукта"),
+        @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера"),
+        @ApiResponse(responseCode = "403", description = "Некорректный путь запроса")
+    })
+    public ResponseEntity<Product> addProduct(@Parameter(description = "Данные о добавляемом продукте", required = true)
+                                                  @RequestBody @Valid Product product) {
         logger.debug("Adding product {}", product);
-//        AtomicReference<Product> productResponse = new AtomicReference<>();;
         activeRequests.incrementAndGet();
         requestCounter.increment();
         processingQueue.add(product);
@@ -78,7 +101,7 @@ public class ProductController {
             // Симуляция обработки
             try {
                 Thread.sleep(100); // Задержка для имитации времени обработки
-                service.saveProduct(product);
+//                service.saveProduct(product);
                 logger.debug("Saved product {}", product);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -90,11 +113,18 @@ public class ProductController {
         });
         responseSizeSummary.record(result.getBytes(StandardCharsets.UTF_8).length);
         activeRequests.decrementAndGet();
-//        Product returnProduct = productResponse.get();
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveProduct(product));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveProduct(product).orElseThrow(() -> new ProductException("Error while saving product "+product) ));
     }
 
+    @Tag(name = "get", description = "GET-методы Employee API")
     @GetMapping
+    @Operation(summary = "Получить список продуктов", description = "В ответе возвращается список объектов Product c полями id, name, quantity и price.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "302", description = "Список продуктов успешно найден"),
+            @ApiResponse(responseCode = "404", description = "Список продуктов пуст"),
+            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера"),
+            @ApiResponse(responseCode = "403", description = "Некорректный путь запроса")
+    })
     public ResponseEntity<List<Product>> findAllProducts() {
         activeRequests.incrementAndGet();
         requestCounter.increment();
@@ -112,11 +142,22 @@ public class ProductController {
         responseSizeSummary.record(result.getBytes(StandardCharsets.UTF_8).length);
         activeRequests.decrementAndGet();
         logger.debug("Returning list of products {}", service.getProducts());
-        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProducts());
+        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProducts().orElseThrow(() -> new ProductException("No products in list")));
     }
 
+    @Tag(name = "get", description = "GET-методы Employee API")
     @GetMapping("{id}")
-    public ResponseEntity<Product> findProductById(@PathVariable int id) {
+    @Operation(summary = "Поиск продукта по id", description = "В ответе возвращается объект Product c полями id, name, quantity и price.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "302", description = "Продукт успешно создан"),
+            @ApiResponse(responseCode = "404", description = "Не найден продукт с таким id"),
+            @ApiResponse(responseCode = "400", description = "Некорректный id продукта"),
+            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера"),
+            @ApiResponse(responseCode = "403", description = "Некорректный путь запроса")
+    })
+    public ResponseEntity<Product> findProductById(@Parameter(
+            description = "ID продукта, данные по которому запрашиваются",
+            required = true)@PathVariable @Valid @Max(100) int id) {
         activeRequests.incrementAndGet();
         requestCounter.increment();
 
@@ -133,12 +174,21 @@ public class ProductController {
         });
         responseSizeSummary.record(result.getBytes(StandardCharsets.UTF_8).length);
         activeRequests.decrementAndGet();
-        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductById(id));
+        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductById(id).orElseThrow(() -> new ProductException("No product with such id "+id) ));
     }
 
+
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "Продукт успешно изменён"),
+        @ApiResponse(responseCode = "400", description = "Некорректные данные продукта"),
+        @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера"),
+        @ApiResponse(responseCode = "403", description = "Некорректный путь запроса")
+        })
     @PutMapping
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-        AtomicReference<Product> productResponse = new AtomicReference<>();;
+    @Operation(summary = "Обновить данные о продукте", description = "В ответе возвращается объект Product c полями id, name, quantity и price.")
+    @Tag(name = "изменение/добавление/удаление")
+    public ResponseEntity<Product> updateProduct(@Parameter(description = "Новые данные о продукте", required = true)
+                                                     @RequestBody @Valid Product product) {
         activeRequests.incrementAndGet();
         requestCounter.increment();
         processingQueue.add(product);
@@ -146,45 +196,66 @@ public class ProductController {
             // Симуляция обработки
             try {
                 Thread.sleep(100); // Задержка для имитации времени обработки
-                productResponse.set(service.saveProduct(product));
                 logger.debug("Saved product {}", product);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 logger.error("Error while saving product {}", product, e);
-                productResponse.set(null);
             }
             return "Processed";
         });
         responseSizeSummary.record(result.getBytes(StandardCharsets.UTF_8).length);
         activeRequests.decrementAndGet();
-        return ResponseEntity.status(HttpStatus.FOUND).body(service.updateProduct(product));
+        return ResponseEntity.status(HttpStatus.FOUND).body(service.updateProduct(product).orElseThrow(() -> new ProductException("No product with such id "+product.getId()) ));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable int id) {
-        AtomicReference<Product> productResponse = new AtomicReference<>();;
+    @Tag(name = "изменение/добавление/удаление")
+    @Operation(summary = "Удалить данные о продукте", description = "В ответе возвращается сообщение об успешном удалении.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "202", description = "Продукт успешно удалён"),
+            @ApiResponse(responseCode = "404", description = "Продукт с таким id не найден"),
+            @ApiResponse(responseCode = "400", description = "Некорректный id продукта"),
+            @ApiResponse(responseCode = "500", description = "Внутренняя ошибка сервера"),
+            @ApiResponse(responseCode = "403", description = "Некорректный путь запроса")
+    })
+    public ResponseEntity<String> deleteProduct(@Parameter(
+            description = "ID продукта, который надо удалить",
+            required = true)@PathVariable @Valid @Max(100) int id) {
         activeRequests.incrementAndGet();
         requestCounter.increment();
-//        processingQueue.add(product);
+        processingQueue.add(new Product());
+//        Добавляем заглушку, так как в очередь можно добавить только Product
         String result = processingTimer.record(() -> {
             // Симуляция обработки
             try {
                 Thread.sleep(100); // Задержка для имитации времени обработки
-//                productResponse.set(service.saveProduct(product));
-                logger.debug("Deleted successfully {}", id);
+                boolean deleted=service.deleteProduct(id);
+                if (!deleted){
+                    logger.debug("No product with such id {}", id);
+                    throw new ProductException("No product with such id "+id);
+                }
+                else {
+                    logger.debug("Deleted successfully {}", id);
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 logger.error("Error while deleting product {}", id, e);
-                productResponse.set(null);
+                throw new ProductException("Error while deleting product "+id);
             }
-            return "Processed";
+            return "Product with id " + id + " successfully deleted";
         });
         responseSizeSummary.record(result.getBytes(StandardCharsets.UTF_8).length);
         activeRequests.decrementAndGet();
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(result);
     }
 
+    @Tag(name = "get", description = "GET-методы Employee API")
     @GetMapping("/queue/stats")
+    @Operation(summary = "Получение данных о состоянии очереди обработки запросов", description = "В ответе возвращается кол-во ативных запросов и длина очереди запросов.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Данные о состоянии очереди успешно получены"),
+            @ApiResponse(responseCode = "404", description = "Данные не найдены")
+    })
     public ResponseEntity<QueueStats> getQueueStats() {
         QueueStats stats = new QueueStats();
         stats.setQueueSize(processingQueue.size());
@@ -196,41 +267,116 @@ public class ProductController {
         return ResponseEntity.ok(stats);
     }
 
+    @Tag(name = "get", description = "GET-методы Employee API")
     @RequestMapping(method = RequestMethod.GET, value = "/byname", produces = "application/json")
+    @Operation(summary = "Список продуктов с сортировкой по имени", description = "В ответе возвращается список объектов Product c полями id, name, quantity и price.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "302", description = "Сортировка прошла успешно"),
+            @ApiResponse(responseCode = "404", description = "Что-то пошло не так")
+    })
     public ResponseEntity<Map<String, List<Product>>> getProductsByName() {
         logger.debug("Getting products by name");
-        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductsByName());
+        try{
+            Thread.sleep(100);
+            if (service.getProductsByName().isEmpty()) {
+                logger.debug("No products found");
+                throw new ProductException("No products in list");
+            }
+            else {
+                logger.debug("Products sorted by name");
+                return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductsByName());
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.error("Error while getting products by name", e);
+            throw new ProductException("Error while getting products by name");
+        }
     }
 
+    @Tag(name = "get", description = "GET-методы Employee API")
     @RequestMapping(method = RequestMethod.GET, value = "/byprice", produces = "application/json")
+    @Operation(summary = "Список продуктов с сортировкой по цене", description = "В ответе возвращается список объектов Product c полями id, name, quantity и price.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "302", description = "Сортировка прошла успешно"),
+            @ApiResponse(responseCode = "404", description = "Что-то пошло не так")
+    })
     public ResponseEntity<Map<Double, List<Product>>> getProductsByPrice() {
-        logger.debug("Getting products by price");
-        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductByPrice());
+        try{
+            logger.debug("Getting products by price");
+            Thread.sleep(100);
+            if (service.getProductByPrice().isEmpty()) {
+                logger.debug("No products found");
+                throw new ProductException("No products in list");
+            }
+            else {
+                logger.debug("Products sorted by price");
+                return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductByPrice());
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.error("Error while getting products by price", e);
+            throw new ProductException("Error while getting products by price");
+        }
     }
 
+    @Tag(name = "get", description = "GET-методы Employee API")
     @RequestMapping(method = RequestMethod.GET, value = "/byquantity", produces = "application/json")
+    @Operation(summary = "Список продуктов с сортировкой по количеству", description = "В ответе возвращается список объектов Product c полями id, name, quantity и price.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "302", description = "Сортировка прошла успешно"),
+            @ApiResponse(responseCode = "404", description = "Что-то пошло не так")
+    })
     public ResponseEntity<Map<Integer, List<Product>>> getProductsByQuantity() {
         logger.debug("Getting products by quantity");
-        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductsByQuantity());
+        try {
+            Thread.sleep(100);
+            if (service.getProductsByQuantity().isEmpty()) {
+                logger.debug("No products found");
+                throw new ProductException("No products in list");
+            } else {
+                logger.debug("Products sorted by quantity");
+                return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductsByQuantity());
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.error("Error while getting products by quantity", e);
+            throw new ProductException("Error while getting products by quantity");
+        }
     }
 
+    @Tag(name = "get", description = "GET-методы Employee API")
     @RequestMapping(method = RequestMethod.GET, value = "/byid", produces = "application/json")
+    @Operation(summary = "Список продуктов с сортировкой по id", description = "В ответе возвращается список объектов Product c полями id, name, quantity и price.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "302", description = "Сортировка прошла успешно"),
+            @ApiResponse(responseCode = "404", description = "Что-то пошло не так")
+    })
     public ResponseEntity<Map<Integer, List<Product>>> getProductsById() {
         logger.debug("Getting products by id");
-        return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductsById());
+        try{
+            Thread.sleep(100);
+            if (service.getProductsById().isEmpty()) {
+                logger.debug("No products found");
+                throw new ProductException("No products in list");
+            }
+            else {
+                logger.debug("Products sorted by id");
+                return ResponseEntity.status(HttpStatus.FOUND).body(service.getProductsById());
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.error("Error while getting products by id", e);
+            throw new ProductException("Error while getting products by id");
+        }
     }
 
 
     // Вспомогательный класс для статистики
+    @Setter
+    @Getter
     static class QueueStats {
         private int queueSize;
         private int activeRequests;
-
-        // Геттеры и сеттеры
-        public int getQueueSize() { return queueSize; }
-        public void setQueueSize(int queueSize) { this.queueSize = queueSize; }
-        public int getActiveRequests() { return activeRequests; }
-        public void setActiveRequests(int activeRequests) { this.activeRequests = activeRequests; }
 
         @Override
         public String toString() {

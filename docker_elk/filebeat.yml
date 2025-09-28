@@ -1,32 +1,39 @@
 name: filebeat
 
-#filebeat.inputs:
-#  - type: log
-#    enabled: true
-#    paths:
-#      - "/var/lib/docker/containers/*/*.log"
+filebeat.inputs:
+  # Для сбора логов из папки logs вашего приложения
+  - type: log
+    enabled: true
+    paths:
+      - "/app_logs/**/*.log"
+    fields:
+      log_type: "app-file-logs"
+      app_name: "spring-boot-app"
+    fields_under_root: true
+    scan_frequency: 30s  # ↑ Увеличить интервал сканирования
+    close_inactive: 5m   # ↑ Увеличить время неактивности
+    ignore_older: 24h    # ↑ Игнорировать старые файлы
 
-filebeat.autodiscover:
-  providers:
-    - type: docker
-      hints.enabled: true
-      hints.default_config:
-        type: container
-        paths:
-          - "/var/lib/docker/containers/${data.container.id}/*.log"
+
 
 processors:
   - add_docker_metadata:
       host: "unix:///var/run/docker.sock"
+  - decode_json_fields:
+      fields: "message"
+      target: "json"
+      overwrite_keys: true
   - add_fields:
       target: ''
       fields:
-        service: 'docker-logs'
+        service: 'filebeat'
 
 output.logstash:
   hosts: ["logstash:5044"]
+  bulk_max_size: 20
+  timeout: 30s
 
-logging.level: info
+logging.level: warning
 logging.to_files: true
 logging.files:
   path: /var/log/filebeat

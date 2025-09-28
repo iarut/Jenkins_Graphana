@@ -1,49 +1,48 @@
-2025-09-08 10:25:53 DEBUG o.e.controller.ProductController - Adding product Product(id=23465, name=product 23, quantity=240, price=24000.0)
-2025-09-08 10:25:53 DEBUG org.example.service.ProductService - Service working on adding product Product(id=23465, name=product 23, quantity=240, price=24000.0)
-2025-09-08 10:25:53 DEBUG o.e.repository.ProductRepository - Repository adding new product
-2025-09-08 10:25:53 DEBUG o.e.controller.ProductController - Saved product Product(id=23465, name=product 23, quantity=240, price=24000.0)
-2025-09-08 10:25:53 DEBUG o.e.controller.ProductController - Saved product Product(id=23465, name=product 23, quantity=240, price=24000.0)
-2025-09-08 10:25:54 DEBUG o.e.controller.ProductController - Adding product Product(id=23465, name=product 23, quantity=240, price=24000.0)
-2025-09-08 10:25:54 DEBUG org.example.service.ProductService - Service working on adding product Product(id=23465, name=product 23, quantity=240, price=24000.0)
-2025-09-08 10:25:54 DEBUG o.e.repository.ProductRepository - Repository adding new product
-2025-09-08 10:25:54 DEBUG o.e.controller.ProductController - Saved product Product(id=23465, name=product 23, quantity=240, price=24000.0)
-2025-09-08 10:25:54 DEBUG o.e.controller.ProductController - Saved product Product(id=23465, name=product 23, quantity=240, price=24000.0)
-2025-09-08 10:25:55 DEBUG o.e.controller.ProductController - Adding product Product(id=23465, name=product 23, quantity=240, price=24000.0)
-2025-09-08 10:25:55 DEBUG org.example.service.ProductService - Service working on adding product Product(id=23465, name=product 23, quantity=240, price=24000.0)
-2025-09-08 10:25:55 DEBUG o.e.repository.ProductRepository - Repository adding new product
-2025-09-08 10:25:55 DEBUG o.e.controller.ProductController - Saved product Product(id=23465, name=product 23, quantity=240, price=24000.0)
-2025-09-08 10:25:55 DEBUG o.e.controller.ProductController - Saved product Product(id=23465, name=product 23, quantity=240, price=24000.0)
-2025-09-08 10:27:43 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:43 DEBUG org.example.service.ProductService - Service returning list of products[Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:43 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:43 DEBUG o.e.controller.ProductController - Returning list of products [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:43 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:43 DEBUG org.example.service.ProductService - Service returning list of products[Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:43 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:57 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:57 DEBUG org.example.service.ProductService - Service returning list of products[Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:57 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:57 DEBUG o.e.controller.ProductController - Returning list of products [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:57 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:57 DEBUG org.example.service.ProductService - Service returning list of products[Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:27:57 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:28:12 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:28:12 DEBUG org.example.service.ProductService - Service returning list of products[Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:28:12 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:28:12 DEBUG o.e.controller.ProductController - Returning list of products [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:28:12 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:28:12 DEBUG org.example.service.ProductService - Service returning list of products[Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:28:12 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0), Product(id=23465, name=product 23, quantity=240, price=24000.0)]
-2025-09-08 10:28:28 DEBUG o.e.controller.ProductController - Returning product by id 1
-2025-09-08 10:28:28 DEBUG org.example.service.ProductService - Service searching for product 1
-2025-09-08 11:59:04 DEBUG o.e.controller.ProductController - Returning product by id 1
-2025-09-08 11:59:04 DEBUG org.example.service.ProductService - Service searching for product 1
-2025-09-08 11:59:04 DEBUG o.e.controller.ProductController - Returning product by id 1
-2025-09-08 11:59:04 DEBUG org.example.service.ProductService - Service searching for product 1
-2025-09-08 11:59:25 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
-2025-09-08 11:59:25 DEBUG org.example.service.ProductService - Service returning list of products[]
-2025-09-08 11:59:25 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
-2025-09-08 11:59:25 DEBUG o.e.controller.ProductController - Returning list of products []
-2025-09-08 11:59:25 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
-2025-09-08 11:59:25 DEBUG org.example.service.ProductService - Service returning list of products[]
-2025-09-08 11:59:25 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-28 14:28:21 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-28 14:28:21 DEBUG org.example.service.ProductService - Service returning list of products[]
+2025-09-28 14:28:21 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-28 14:28:21 DEBUG o.e.controller.ProductController - Returning list of products []
+2025-09-28 14:28:21 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-28 14:28:21 DEBUG org.example.service.ProductService - Service returning list of products[]
+2025-09-28 14:28:21 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-28 14:28:22 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-28 14:28:22 DEBUG org.example.service.ProductService - Service returning list of products[]
+2025-09-28 14:28:22 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-28 14:28:22 DEBUG o.e.controller.ProductController - Returning list of products []
+2025-09-28 14:28:22 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-28 14:28:22 DEBUG org.example.service.ProductService - Service returning list of products[]
+2025-09-28 14:28:22 DEBUG o.e.repository.ProductRepository - Repository returning list of products product []
+2025-09-28 14:28:27 DEBUG o.e.controller.ProductController - Adding product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:27 DEBUG org.example.service.ProductService - Service working on adding product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:27 DEBUG o.e.repository.ProductRepository - Repository adding new product
+2025-09-28 14:28:27 DEBUG o.e.controller.ProductController - Saved product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:27 DEBUG o.e.controller.ProductController - Saved product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:28 DEBUG o.e.controller.ProductController - Adding product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:28 DEBUG org.example.service.ProductService - Service working on adding product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:28 DEBUG o.e.repository.ProductRepository - Repository adding new product
+2025-09-28 14:28:28 DEBUG o.e.controller.ProductController - Saved product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:28 DEBUG o.e.controller.ProductController - Saved product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:29 DEBUG o.e.controller.ProductController - Adding product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:29 DEBUG org.example.service.ProductService - Service working on adding product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:29 DEBUG o.e.repository.ProductRepository - Repository adding new product
+2025-09-28 14:28:29 DEBUG o.e.controller.ProductController - Saved product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:29 DEBUG o.e.controller.ProductController - Saved product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:30 DEBUG o.e.controller.ProductController - Adding product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:30 DEBUG org.example.service.ProductService - Service working on adding product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:30 DEBUG o.e.repository.ProductRepository - Repository adding new product
+2025-09-28 14:28:30 DEBUG o.e.controller.ProductController - Saved product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:30 DEBUG o.e.controller.ProductController - Saved product Product(id=234, name=mkyon, quantity=1, price=1.0)
+2025-09-28 14:28:37 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:37 DEBUG org.example.service.ProductService - Service returning list of products[Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:37 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:37 DEBUG o.e.controller.ProductController - Returning list of products [Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:37 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:37 DEBUG org.example.service.ProductService - Service returning list of products[Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:37 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:38 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:38 DEBUG org.example.service.ProductService - Service returning list of products[Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:38 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:38 DEBUG o.e.controller.ProductController - Returning list of products [Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:38 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:38 DEBUG org.example.service.ProductService - Service returning list of products[Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]
+2025-09-28 14:28:38 DEBUG o.e.repository.ProductRepository - Repository returning list of products product [Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0), Product(id=234, name=mkyon, quantity=1, price=1.0)]

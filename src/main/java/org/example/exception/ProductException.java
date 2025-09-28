@@ -1,4 +1,7 @@
 package org.example.exception;
 
-public class ProductException {
+public class ProductException extends RuntimeException{
+    public ProductException(String message) {
+        super(message);
+    }
 }

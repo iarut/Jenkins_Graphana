@@ -1,9 +1,11 @@
-package org.example;
+package org.example.model;
 
-import org.example.model.InjectRandomInt;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.example.model.InjectRandomInt;
 
 @Component
+@Scope("prototype")
 public class Cat {
 
     @InjectRandomInt(min=1, max =100)

@@ -97,10 +97,6 @@ function dropdown() {
       if (referenceParent.classList.contains("model-link")) {
         referenceParent.classList.add("model-link--open");
       }
-    },
-    onHide: instance => {
-      const referenceParent = instance.reference.parentNode;
-      referenceParent.classList.remove("model-link--open");
     }
   };
 }
@@ -294,6 +290,8 @@ function generateDropdown(element, callback, immediate, options = {}) {
       }
     },
     onHide(instance) {
+      const referenceParent = instance.reference.parentNode;
+      referenceParent.classList.remove("model-link--open");
       if (instance.props.trigger === "mouseenter" && !instance.clickToHide) {
         const dropdowns = document.querySelectorAll("[data-tippy-root]");
         const isMouseOverAnyDropdown = Array.from(dropdowns).some(dropdown => dropdown.matches(":hover"));

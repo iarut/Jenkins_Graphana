@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -18,30 +19,62 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
-    public Product saveProduct(Product product) {
+    public Optional<Product> saveProduct(Product product) {
         logger.debug("Service working on adding product {}", product);
-        return repository.save(product);
+        if (product.getName() == null) {
+            logger.error("Product name is null");
+            return Optional.empty();
+        }
+        if (product.getPrice() <= 0) {
+            logger.error("Product price is less than or equal to zero");
+            return Optional.empty();
+        }
+        if (product.getQuantity() < 0) {
+            logger.error("Product quantity is less than zero");
+            return Optional.empty();
+        }
+//        if (product.getId() == null) {
+//            logger.error("Product id is null");
+//            return Optional.empty();
+//        }
+        return Optional.ofNullable(repository.save(product));
     }
 
-    public List<Product> getProducts() {
+    public Optional<List<Product>> getProducts() {
         logger.debug("Service returning list of products{}", repository.getAllProducts());
         return repository.getAllProducts();
     }
 
-    public Product getProductById(int id) {
+    public Optional<Product> getProductById(int id) {
         logger.debug("Service searching for product {}", id);
         return repository.findById(id);
     }
 
-    public String deleteProduct(int id) {
-        repository.delete(id);
+    public boolean deleteProduct(int id) {
+        String message = repository.delete(id);
         logger.debug("Service deleting product {}", id);
-        return "product removed !! " + id;
+        return message.equals("Product with id " + id + " deleted");
     }
 
-    public Product updateProduct(Product product) {
+    public Optional<Product> updateProduct(Product product) {
         logger.debug("Service updating {}", product);
-        return repository.update(product);
+        if (product.getName() == null) {
+            logger.error("Product name is null");
+            return Optional.empty();
+        }
+        if (product.getPrice() <= 0) {
+            logger.error("Product price is less than or equal to zero");
+            return Optional.empty();
+        }
+        if (product.getQuantity() < 0) {
+            logger.error("Product quantity is less than zero");
+            return Optional.empty();
+        }
+//        if (product.getId() == null) {
+//            logger.error("Product id is null");
+//            return Optional.empty();
+//        }
+        return Optional.ofNullable(repository.update(product));
     }
 
     public Map<String, List<Product>> getProductsByName() {

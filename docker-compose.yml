@@ -79,17 +79,86 @@ services:
     networks:
       monitoring:
 
-#  app:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile_app
-#    container_name: myapp
-#    ports:
-#      - "8081:8081"
-#    networks:
-#      - monitoring
-#    depends_on:
-#      - jenkins
+  elasticsearch:
+    build:
+      context: docker_elk/elasticsearch
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: elastic
+      discovery.type: single-node
+    networks:
+      - monitoring
+
+  logstash:
+    build:
+      context: docker_elk/logstash
+    ports:
+      - "5044:5044"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    volumes:
+      - ./docker_elk/logstash/pipeline:/usr/share/logstash/pipeline:ro  # ← Важно!
+    networks:
+      - monitoring
+    depends_on:
+      - elasticsearch
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:9600/_node/pipelines || exit 1" ]
+      interval: 10s
+      retries: 10
+
+  kibana:
+    build:
+      context: docker_elk/kibana
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+      ELASTICSEARCH_USERNAME: "elastic"
+      ELASTICSEARCH_PASSWORD: "elastic"
+    networks:
+      - monitoring
+    depends_on:
+      - elasticsearch
+
+
+  filebeat:
+    depends_on:
+      logstash:
+        condition: service_healthy
+    build:
+      context: docker_elk
+      dockerfile: Dockerfile
+    container_name: filebeat
+    user: root
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./logs:/app_logs:ro
+    networks:
+      - monitoring
+
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile_app
+    container_name: spring-boot-app
+    ports:
+      - 8081:8081
+    volumes:
+      - ./logs:/app/logs:rw
+    depends_on:
+      - jenkins
+    networks:
+      monitoring:
+
 
 
 networks:
@@ -102,3 +171,4 @@ volumes:
   grafana_data:
   influxdb_data:
   jenkins_home:
+  elasticsearch_data:
